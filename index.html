@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>John. Happy Birthday 🎂</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+<main class="frame">
+
+    <!-- Scene 1 -->
+    <section id="scene1" class="scene active">
+        <div class="content">
+            <header class="hero">
+                <h1 class="title">John. Happy Birthday 🎂</h1>
+            </header>
+
+            <div class="letter-wrap">
+                <div id="envStage" class="envelopeStage" aria-label="envelope stage">
+                    <img src="envelope.png" alt="Red envelope with wax seal" />
+                    <button id="sealBtn" class="waxBtn" aria-label="open wax seal"></button>
+                    <div class="sparkle"></div>
+                </div>
+            </div>
+
+            <p class="hint">Tap the wax seal to open.</p>
+        </div>
+    </section>
+
+    <!-- Scene 2 -->
+    <section id="scene2" class="scene">
+        <div class="content">
+            <header class="hero">
+                <h1 class="title">John. Happy Birthday 🎂</h1>
+                <p class="subtitle">Choose your birthday cake.</p>
+            </header>
+
+            <div class="cakeCol">
+                <button class="cakePick" data-id="cakeA" data-name="Classic Chocolate" aria-label="Classic Chocolate">
+                    <div class="cakeMedia">
+                        <img class="cakeImg" src="cake-chocolate.png" alt="Classic Chocolate" />
+                    </div>
+                    <div class="cakeName">Classic Chocolate</div>
+                </button>
+
+                <button class="cakePick" data-id="cakeB" data-name="Strawberry Cream" aria-label="Strawberry Cream">
+                    <div class="cakeMedia">
+                        <img class="cakeImg" src="cake-strawberry.png" alt="Strawberry Cream" />
+                    </div>
+                    <div class="cakeName">Strawberry Cream</div>
+                </button>
+
+                <button class="cakePick" data-id="cakeC" data-name="Matcha Velvet" aria-label="Matcha Velvet">
+                    <div class="cakeMedia">
+                        <img class="cakeImg" src="cake-matcha.png" alt="Matcha Velvet" />
+                    </div>
+                    <div class="cakeName">Matcha Velvet</div>
+                </button>
+            </div>
+
+            <p class="hint">Pick one.</p>
+        </div>
+    </section>
+
+    <!-- Scene 3 -->
+    <section id="scene3" class="scene">
+        <div class="content">
+            <header class="hero">
+                <h1 class="title">John. Happy Birthday 🎂</h1>
+                <p class="subtitle">Tap the cake to reveal your surprise.</p>
+            </header>
+
+            <div class="reveal">
+                <button id="revealCakeBtn" aria-label="tap cake to reveal surprise">
+                    <div class="chosenFrame">
+                        <img id="chosenCakeImg" alt="Chosen cake" />
+                    </div>
+                    <div id="chosenCakeName" class="cakeName"></div>
+                </button>
+            </div>
+
+            <p class="hint">Tap the cake.</p>
+        </div>
+    </section>
+
+</main>
+
+<!-- Modal -->
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card">
+        <button id="modalClose" class="modal-close" aria-label="close">×</button>
+        <div class="card-title">Congratulations 💫</div>
+        <div class="card-line">You’ve unlocked a hidden birthday surprise.</div>
+        <div class="card-line soft">
+            Unlocking in <span id="countdown">--h --m --s</span> ✨
+        </div>
+    </div>
+</div>
+
+<script src="./app.js"></script>
+</body>
+</html>
