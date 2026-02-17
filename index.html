@@ -149,7 +149,7 @@
           display:inline-block;
           opacity:0;
           transform: translateY(10px);
-          animation: wordIn .9s ease forwards;
+          animation: wordIn 1.4s ease forwards;
           animation-delay: var(--d);
         }
         @keyframes wordIn{
@@ -157,7 +157,7 @@
         }
 
         #scene1.s1-title-out .hero{
-          transition: opacity .9s ease, transform .9s ease;
+          transition: opacity 1.6s ease, transform 1.6s ease;
           opacity:0;
           transform: translate(-50%,-58%);
         }
@@ -569,9 +569,9 @@
     <div class="modal-card">
         <button id="modalClose" class="modal-close" aria-label="close">×</button>
         <div class="card-title">Congratulations 💫</div>
-        <div class="card-line">You’ve found a hidden birthday surprise 🎁</div>
+        <div class="card-line">You’ve found a hidden Birthday Surprise 🎁</div>
         <div class="card-line soft">
-            Unlocking in <span id="countdown">--h --m --s</span> 🗝️
+            🗝️Unlocking in <span id="countdown">--h --m --s</span>
         </div>
     </div>
 </div>
@@ -660,7 +660,7 @@
         startSparkRain(18);
       }, 750);
 
-      const totalMs = getWordAnimTotalMs(titleEl, 520, 900) + 900;
+      const totalMs = getWordAnimTotalMs(titleEl, 1100, 1600) + 2600;
 
       setTimeout(() => {
         scene1.classList.add("s1-title-out");
