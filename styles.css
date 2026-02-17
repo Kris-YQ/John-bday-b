@@ -1,3 +1,5 @@
+css
+
 :root{
   --bg:#0b0f1a;
   --text:#f4f1ea;
@@ -49,6 +51,7 @@ body{
   background-repeat: no-repeat;
 }
 
+/* iPhone / mobile: full screen */
 @media (max-width: 1024px){
   body{ padding:0; display:block; }
   .frame{
@@ -107,74 +110,107 @@ body{
   flex: 0 0 auto;
 }
 
-/* =========================
-   Scene 1 (REWORK)
-   文字：中间慢慢出现 + 掉落碎✨
-   然后文字淡出，信封淡入出现
-   ========================= */
-#scene1 .content{
-  justify-content:center;
+/* =========================================================
+   Scene 1 (CENTER STAGE)
+   - 标题固定中间逐词出现
+   - 标题淡出后，信封在同位置淡入
+   - Tap 提示文：信封下方两三行（不贴底）
+   ========================================================= */
+
+#scene1 .content{ justify-content:center; }
+
+#scene1 .centerStage{
   position:relative;
+  width:100%;
+  height: 78dvh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-/* 初始：只显示标题（在正中） */
+/* 标题（hero）固定中心点位 */
 #scene1 .hero{
-  transform: translateY(0);
-  opacity: 0;
-  transition: opacity 1.1s ease, transform 1.1s ease;
+  position:absolute;
+  left:50%;
+  top:45%;
+  transform: translate(-50%,-50%);
+  width: min(92vw, 720px);
+  text-align:center;
+  margin:0;
+  opacity:1; /* 由 span.w 控制逐词淡入 */
 }
 
-/* 标题出现 */
-#scene1.s1-title-in .hero{
-  opacity: 1;
-  transform: translateY(-2px);
+/* 逐词动画：JS 注入 span.w */
+#scene1 .title{ margin:0; }
+#scene1 .title .w{
+  display:inline-block;
+  opacity:0;
+  transform: translateY(10px);
+  animation: wordIn .9s ease forwards;
+  animation-delay: var(--d);
+}
+@keyframes wordIn{
+  to{ opacity:1; transform: translateY(0); }
 }
 
-/* 标题消失 */
+/* 标题整体淡出 */
 #scene1.s1-title-out .hero{
-  opacity: 0;
-  transform: translateY(-10px);
+  transition: opacity .9s ease, transform .9s ease;
+  opacity:0;
+  transform: translate(-50%,-58%);
 }
 
-/* 信封：默认隐藏（等标题结束才出现） */
-#scene1 .letter-wrap,
+/* 信封：同中心点位 */
+#scene1 .letter-wrap{
+  position:absolute;
+  left:50%;
+  top:45%;
+  transform: translate(-50%,-50%);
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity .8s ease, transform .8s ease;
+}
+#scene1.s1-envelope-in .letter-wrap{
+  opacity:1;
+  transform: translate(-50%,-50%) scale(1);
+  pointer-events:auto;
+}
+
+/* 提示文：信封下方两三行 */
 #scene1 .hint{
-  opacity: 0;
-  transform: translateY(10px) scale(.99);
-  transition: opacity .55s ease, transform .55s ease;
+  position:absolute;
+  left:50%;
+  top: calc(45% + clamp(190px, 28vw, 230px));
+  transform: translateX(-50%);
+  margin:0;
+  opacity:0;
+  transition: opacity .8s ease;
 }
-
-/* 信封出现 */
-#scene1.s1-envelope-in .letter-wrap,
-#scene1.s1-envelope-in .hint{
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+#scene1.s1-envelope-in .hint{ opacity:1; }
 
 /* 碎✨掉落层 */
-.sparkRain{
+#scene1 .sparkRain{
   position:absolute;
   inset:0;
   pointer-events:none;
   overflow:hidden;
   opacity:0;
 }
+#scene1.s1-spark .sparkRain{ opacity:1; }
 
-/* 开始掉落 */
-#scene1.s1-spark .sparkRain{
-  opacity:1;
-}
-
-/* 单个 sparkle */
-.spark{
+#scene1 .spark{
   position:absolute;
   top:-20px;
   font-size: 14px;
-  opacity: 0;
+  opacity:0;
   filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
   animation: fall var(--dur) ease-in forwards;
+  animation-delay: var(--delay);
 }
-
 @keyframes fall{
   0%   { transform: translateY(0) scale(.9) rotate(0deg); opacity:0; }
   15%  { opacity: .9; }
@@ -182,14 +218,6 @@ body{
 }
 
 /* ===== Envelope ===== */
-.letter-wrap{
-  flex:1;
-  width:100%;
-  min-height:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
 .envelopeStage{
   position:relative;
   width: min(520px, 88vw);
@@ -222,6 +250,7 @@ body{
   -webkit-tap-highlight-color: transparent;
 }
 .waxBtn:active{ transform: translate(-50%,-50%) scale(.985); }
+
 .sparkle{
   position:absolute;
   inset:-50px;
@@ -231,6 +260,7 @@ body{
 }
 .opened .waxBtn{ animation: crack .55s ease forwards; }
 .opened .sparkle{ animation: glow .9s ease forwards; }
+
 @keyframes crack{
   0%{transform: translate(-50%,-50%) scale(1); opacity:1}
   70%{transform: translate(-50%,-50%) scale(1.03); opacity:1}
@@ -243,9 +273,12 @@ body{
 }
 
 /* =========================================================
-   Scene 2: vertical cakes, rectangle card, hover = slightly bigger
+   Scene 2: cakes list (NO hover / NO selected)
    ========================================================= */
-#scene2{ overflow:auto; -webkit-overflow-scrolling: touch; }
+#scene2{
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+}
 #scene2::-webkit-scrollbar{ width:0; height:0; display:none; }
 
 .cakeCol{
@@ -265,21 +298,17 @@ body{
   border-radius:18px;
   padding:12px;
   cursor:pointer;
-  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+  transition: background .18s ease, transform .12s ease;
   box-shadow: 0 14px 34px rgba(0,0,0,.30);
   overflow:hidden;
   -webkit-tap-highlight-color: transparent;
   text-align:left;
 }
-.cakePick:hover{
-  transform: translateY(-2px);
-  border-color: rgba(212,175,55,.45);
+
+/* 手机点击反馈（轻微） */
+.cakePick:active{
+  transform: scale(.995);
   background: rgba(0,0,0,.22);
-}
-.cakePick.selected{
-  border-color: rgba(212,175,55,.85);
-  background: rgba(212,175,55,.10);
-  box-shadow: 0 20px 54px rgba(0,0,0,.42);
 }
 
 .cakeMedia{
@@ -290,21 +319,16 @@ body{
   background: rgba(0,0,0,.12);
   position:relative;
 }
-.cakeMedia::before{ content:""; display:block; padding-top: 62%; } /* ✅ 矩形卡片比例 */
+.cakeMedia::before{ content:""; display:block; padding-top: 62%; } /* 矩形比例 */
+
 .cakeImg{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
-  object-fit: contain;     /* ✅ 手机优先：永远完整 */
-  padding: 8px;
-  transform: scale(1);
-  transition: transform .18s ease;
-}
-@media (hover:hover) and (pointer:fine){
-  .cakePick:hover .cakeImg{
-    transform: scale(1.06); /* ✅ “稍微大一点”，不满屏 */
-  }
+  object-fit: contain;  /* 关键：完整显示 */
+  padding: 6px;         /* 想更大：改 4px；想更留白：改 8px */
+  transform: none;
 }
 
 .cakeName{
@@ -317,7 +341,7 @@ body{
 }
 
 /* =========================================================
-   Scene 3: big rectangle, contain (no stretch/crop)
+   Scene 3: chosen cake (keep as-is)
    ========================================================= */
 .reveal{
   flex:1;
@@ -349,17 +373,17 @@ body{
   box-shadow: 0 18px 48px rgba(0,0,0,.35);
   position:relative;
 }
-.chosenFrame::before{ content:""; display:block; padding-top: 75%; } /* ✅ 大矩形 */
+.chosenFrame::before{ content:""; display:block; padding-top: 75%; }
 #chosenCakeImg{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
-  object-fit: contain;  /* ✅ 完整显示 */
+  object-fit: contain;
   padding: 10px;
 }
 
-/* ===== Modal (background still visible) ===== */
+/* ===== Modal (keep as-is) ===== */
 .modal{
   position:fixed;
   inset:0;
@@ -373,7 +397,7 @@ body{
 .modal-backdrop{
   position:absolute;
   inset:0;
-  background: rgba(0,0,0,.22);      /* ✅ 不再全黑 */
+  background: rgba(0,0,0,.22);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
