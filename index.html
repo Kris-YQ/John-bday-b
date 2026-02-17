@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <title>John. Happy Birthday 🎂</title>
+    <title>John,Happy Birthday!🎂</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -476,72 +476,6 @@
   font-size:15px;
 }
 
-/
-/* stronger breathe / glow + subtle gold sweep */
-.breathe{
-  position: relative;
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: 999px;
-  color: rgba(244,241,234,.92);
-  text-shadow:
-    0 10px 26px rgba(0,0,0,.40),
-    0 0 18px rgba(212,175,55,.18);
-  background: rgba(0,0,0,.10);
-  border: 1px solid rgba(255,255,255,.10);
-  animation: breatheGlow 2.2s ease-in-out infinite;
-  will-change: transform, filter, opacity;
-}
-
-/* 金色扫光（很轻，提升“看得见”的动态） */
-.breathe::after{
-  content:"";
-  position:absolute;
-  inset:-1px;
-  border-radius:999px;
-  background: linear-gradient(90deg,
-    rgba(212,175,55,0) 0%,
-    rgba(212,175,55,.22) 40%,
-    rgba(242,223,154,.28) 50%,
-    rgba(212,175,55,.22) 60%,
-    rgba(212,175,55,0) 100%);
-  opacity:.0;
-  transform: translateX(-40%);
-  animation: sweep 2.2s ease-in-out infinite;
-  pointer-events:none;
-  mix-blend-mode: screen;
-}
-
-@keyframes breatheGlow{
-  0%,100%{
-    transform: translateY(0) scale(1);
-    filter: brightness(1);
-    opacity: .78;
-    box-shadow:
-      0 14px 34px rgba(0,0,0,.18),
-      0 0 0 rgba(212,175,55,0);
-  }
-  50%{
-    transform: translateY(-1px) scale(1.02);
-    filter: brightness(1.15);
-    opacity: 1;
-    box-shadow:
-      0 16px 40px rgba(0,0,0,.22),
-      0 0 22px rgba(212,175,55,.30);
-  }
-}
-
-@keyframes sweep{
-  0%,100%{ opacity:0; transform: translateX(-40%); }
-  35%{ opacity:.0; }
-  50%{ opacity:.65; transform: translateX(40%); }
-  65%{ opacity:.0; }
-}
-
-/* Reduce motion support */
-@media (prefers-reduced-motion: reduce){
-  .breathe, .breathe::after{ animation: none !important; }
-}
     </style>
 </head>
 
@@ -553,7 +487,7 @@
         <div class="content">
             <div class="centerStage">
                 <header class="hero">
-                    <h1 class="title" id="title1">John. Happy Birthday 🎂</h1>
+                    <h1 class="title" id="title1">John,Happy Birthday!</h1>
                 </header>
 
                 <div id="sparkRain" class="sparkRain" aria-hidden="true"></div>
@@ -575,7 +509,7 @@
     <section id="scene2" class="scene">
         <div class="content">
             <header class="hero">
-                <h1 class="title">John. Happy Birthday 🎂</h1>
+                <h1 class="title">John,Happy Birthday!</h1>
                 <p class="subtitle">Choose your birthday cake.</p>
             </header>
 
@@ -610,8 +544,8 @@
     <section id="scene3" class="scene">
         <div class="content">
             <header class="hero hero--lower">
-                <h1 class="title">John. Happy Birthday 🎂</h1>
-                <p class="subtitle breathe">Open your surprise.</p>
+                <h1 class="title">John,Happy Birthday!</h1>
+                <p class="subtitle">Open your surprise.</p>
             </header>
 
             <div class="reveal">
@@ -635,7 +569,7 @@
     <div class="modal-card">
         <button id="modalClose" class="modal-close" aria-label="close">×</button>
         <div class="card-title">Congratulations 💫</div>
-        <div class="card-line">You’ve unlocked a hidden birthday surprise.</div>
+        <div class="card-line">You’ve found a hidden birthday surprise.</div>
         <div class="card-line soft">
             Unlocking in <span id="countdown">--h --m --s</span> ✨
         </div>
