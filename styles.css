@@ -107,31 +107,78 @@ body{
   flex: 0 0 auto;
 }
 
-/* =========================================================
-   Scene 1: title in middle -> lift up, then envelope appears
-   ========================================================= */
+/* =========================
+   Scene 1 (REWORK)
+   文字：中间慢慢出现 + 掉落碎✨
+   然后文字淡出，信封淡入出现
+   ========================= */
 #scene1 .content{
-  justify-content:center;       /* 先把整体放中间 */
+  justify-content:center;
+  position:relative;
 }
+
+/* 初始：只显示标题（在正中） */
 #scene1 .hero{
-  transform: translateY(10vh);
+  transform: translateY(0);
   opacity: 0;
-  transition: transform .65s ease, opacity .65s ease;
+  transition: opacity 1.1s ease, transform 1.1s ease;
 }
-#scene1 .letter-wrap{
-  opacity: 0;
-  transform: translateY(10px) scale(.985);
-  transition: opacity .45s ease, transform .45s ease;
-}
-#scene1.s1-show .hero{
+
+/* 标题出现 */
+#scene1.s1-title-in .hero{
   opacity: 1;
+  transform: translateY(-2px);
 }
-#scene1.s1-lift .hero{
-  transform: translateY(-2vh);  /* ✅ 只上移一点点：不顶到太高 */
+
+/* 标题消失 */
+#scene1.s1-title-out .hero{
+  opacity: 0;
+  transform: translateY(-10px);
 }
-#scene1.s1-lift .letter-wrap{
+
+/* 信封：默认隐藏（等标题结束才出现） */
+#scene1 .letter-wrap,
+#scene1 .hint{
+  opacity: 0;
+  transform: translateY(10px) scale(.99);
+  transition: opacity .55s ease, transform .55s ease;
+}
+
+/* 信封出现 */
+#scene1.s1-envelope-in .letter-wrap,
+#scene1.s1-envelope-in .hint{
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+/* 碎✨掉落层 */
+.sparkRain{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  opacity:0;
+}
+
+/* 开始掉落 */
+#scene1.s1-spark .sparkRain{
+  opacity:1;
+}
+
+/* 单个 sparkle */
+.spark{
+  position:absolute;
+  top:-20px;
+  font-size: 14px;
+  opacity: 0;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
+  animation: fall var(--dur) ease-in forwards;
+}
+
+@keyframes fall{
+  0%   { transform: translateY(0) scale(.9) rotate(0deg); opacity:0; }
+  15%  { opacity: .9; }
+  100% { transform: translateY(var(--dy)) scale(1) rotate(var(--rot)); opacity:0; }
 }
 
 /* ===== Envelope ===== */

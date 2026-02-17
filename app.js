@@ -26,15 +26,65 @@ function go(to){
   to.classList.add("active");
 }
 
-// ===== Scene1 intro animation (title center -> lift; envelope appears) =====
+// ===== Scene1 intro animation (REWORK) =====
 window.addEventListener("DOMContentLoaded", () => {
-  // show title fade in
-  setTimeout(() => scene1.classList.add("s1-show"), 80);
-  // lift title + show envelope
-  setTimeout(() => scene1.classList.add("s1-lift"), 700);
-
+  runScene1Intro();
   restoreChoice();
 });
+
+function runScene1Intro(){
+  // 0) 标题缓慢出现（在中间）
+  setTimeout(() => scene1.classList.add("s1-title-in"), 120);
+
+  // 1) 碎✨掉落（在标题出现后开始）
+  setTimeout(() => {
+    scene1.classList.add("s1-spark");
+    startSparkRain(22); // 你想更多就调大
+  }, 520);
+
+  // 2) 标题停留一会儿再淡出
+  setTimeout(() => scene1.classList.add("s1-title-out"), 2200);
+
+  // 3) 信封淡入出现（标题淡出后）
+  setTimeout(() => scene1.classList.add("s1-envelope-in"), 2850);
+}
+
+function startSparkRain(count = 18){
+  const box = document.getElementById("sparkRain");
+  if(!box) return;
+
+  box.innerHTML = "";
+  const emojis = ["✨","✦","✧","⋆"];
+
+  for(let i=0;i<count;i++){
+    const s = document.createElement("div");
+    s.className = "spark";
+    s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+
+    // 横向随机
+    const left = Math.random()*100;
+    // 下落距离随机（按屏高比例）
+    const dy = 260 + Math.random()*320; // px
+    // 时长随机
+    const dur = 1.2 + Math.random()*1.2; // s
+    // 旋转随机
+    const rot = (Math.random()*140 - 70).toFixed(0) + "deg";
+
+    s.style.left = left + "%";
+    s.style.setProperty("--dy", dy + "px");
+    s.style.setProperty("--dur", dur + "s");
+    s.style.setProperty("--rot", rot);
+
+    // 让它不是同一时间掉
+    s.style.animationDelay = (Math.random()*0.7) + "s";
+
+    box.appendChild(s);
+  }
+
+  // 4 秒后自动清理（避免 DOM 越堆越多）
+  setTimeout(()=>{ box.innerHTML = ""; }, 4200);
+}
+
 
 // ===== Countdown to March 6 00:00 (device local time) =====
 let countdownTimer = null;
