@@ -99,7 +99,7 @@
           font-family:var(--scriptFont);
           font-weight:400;
           margin: 8px 0 2px;
-          font-size: clamp(34px, 4.4vw, 62px);
+          font-size: clamp(38px, 5.2vw, 70px);
           text-shadow: 0 16px 30px rgba(0,0,0,.35);
           letter-spacing:.2px;
           color: var(--text);
@@ -325,6 +325,9 @@
           object-fit: contain;
           padding: 6px;
         }
+        .cakeImg--strawberry{
+        transform: translateY(-4px) scale(1.04);
+        }
 
         .cakeName{
           margin-top:10px;
@@ -453,6 +456,16 @@
         @media (prefers-reduced-motion: reduce){
           *{ animation: none !important; transition: none !important; }
         }
+
+/* Scene3：标题区不要置顶，挪到蛋糕图上方 */
+#scene3 .content{
+  justify-content:center;
+}
+
+#scene3 .hero--lower{
+  margin-top: 14dvh;         /* 下移一点（两三行的感觉） */
+  margin-bottom: 12px;       /* 和蛋糕图保持一点距离 */
+}
     </style>
 </head>
 
@@ -500,7 +513,7 @@
 
                 <button class="cakePick" data-id="cakeB" data-name="Strawberry Cream" aria-label="Strawberry Cream">
                     <div class="cakeMedia">
-                        <img class="cakeImg" src="cake-strawberry.png" alt="Strawberry Cream" />
+                        <img class="cakeImg cakeImg--strawberry" src="cake-strawberry.png" alt="Strawberry Cream" />
                     </div>
                     <div class="cakeName">Strawberry Cream</div>
                 </button>
@@ -520,9 +533,9 @@
     <!-- Scene 3 -->
     <section id="scene3" class="scene">
         <div class="content">
-            <header class="hero">
+            <header class="hero hero--lower">
                 <h1 class="title">John. Happy Birthday 🎂</h1>
-                <p class="subtitle">Tap the cake to reveal your surprise.</p>
+                <p class="subtitle">Open your surprise.</p>
             </header>
 
             <div class="reveal">
@@ -534,7 +547,7 @@
                 </button>
             </div>
 
-            <p class="hint">Tap the cake.</p>
+
         </div>
     </section>
 
